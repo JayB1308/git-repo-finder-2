@@ -1,0 +1,25 @@
+.repo-container {
+  width: 96%;
+  display: flex;
+  padding: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  .repos {
+    width: 95%;
+    margin: 0.5rem auto;
+    display: grid;
+    row-gap: 5%;
+    column-gap: 2%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: $screen-mobile-l) and (min-width: $screen-mobile-s) {
+    width: 100%;
+    .repos {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+}

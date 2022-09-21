@@ -1,0 +1,151 @@
+.profile-header-container {
+  width: 90%;
+  margin-top: 1%;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  background-color: $bg-color;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+
+  .profile-image-container {
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    align-items: center;
+    .avatar-image {
+      width: 75%;
+      border-radius: 50%;
+      box-shadow: 0px 4px 20px $font-accent-color;
+    }
+    h2 {
+      margin-top: 5%;
+      font-size: $regular;
+    }
+  }
+  .profile-information-container {
+    display: flex;
+    width: 90%;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    overflow-x: hidden;
+    .profile-name-container {
+      display: flex;
+      width: 60%;
+      flex-direction: column;
+      .user-name {
+        font-size: $x-large;
+        color: $bg-accent-color;
+      }
+      .user-bio {
+        font-size: $regular;
+      }
+      .location-container {
+        display: flex;
+        margin-top: 2%;
+        align-items: center;
+        gap: 5%;
+      }
+      .follow-container {
+        display: flex;
+        margin-top: 2%;
+        align-items: center;
+        gap: 0.25rem;
+        font-weight: 600;
+        .sidebar-icon {
+          margin-right: -0.1rem;
+          color: #353535;
+        }
+        .dots {
+          width: 0.25rem;
+          height: 0.25rem;
+          background-color: $font-accent-color;
+          border-radius: 50%;
+        }
+      }
+      .company-container {
+        display: flex;
+        align-items: center;
+        margin-top: 2%;
+      }
+    }
+  }
+
+  @media screen and (max-width: $screen-mobile-l) and (min-width: $screen-mobile-s) {
+    flex-direction: column;
+    width: 100%;
+    .profile-image-container {
+      width: 90%;
+      h2 {
+        margin-top: 5%;
+        font-size: $medium;
+      }
+    }
+    .profile-information-container {
+      width: 90%;
+      flex-direction: column;
+      align-items: center;
+      .profile-name-container {
+        width: 100%;
+        .user-name {
+          width: 90%;
+          text-align: center;
+        }
+        .user-bio {
+          width: 90%;
+          text-align: center;
+        }
+        .location-container {
+          flex-direction: column;
+          width: 90%;
+        }
+        .follow-container {
+          width: 100%;
+          margin-top: 5%;
+          justify-content: center;
+        }
+        .company-container {
+          justify-content: center;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $screen-tablet-l) and (min-width: $screen-tablet-s) {
+  }
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 1.5%;
+  font-weight: 600;
+  .user-icon {
+    font-size: $regular;
+  }
+  @media screen and (max-width: $screen-mobile-l) and (min-width: $screen-mobile-s) {
+    justify-content: space-between;
+    width: 75%;
+    margin-top: 4%;
+  }
+}
+
+.location-icon {
+  color: #d00000;
+}
+
+.twitter-icon {
+  color: #00b4d8;
+}
+
+.blog-icon {
+  color: #560bad;
+}
+
+.email-icon {
+  color: #353535;
+}
+
+.company-icon {
+  color: #353535;
+}

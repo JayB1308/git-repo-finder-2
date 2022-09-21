@@ -1,0 +1,13 @@
+@import "base/base";
+
+//components
+@import "components/RepoForm.scss";
+@import "components/profile-header.scss";
+@import "components/repo-container.scss";
+@import "components/repo-bar.scss";
+@import "components/repo.scss";
+@import "components/loader.scss";
+
+//Pages
+@import "pages/home.scss";
+@import "pages/profile.scss";
