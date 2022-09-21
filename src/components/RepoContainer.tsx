@@ -8,7 +8,7 @@ const RepoContainer = ({ repos }: RepoCont) => {
     <div className="repo-container">
       <div className="repos">
         {repos.map((repo) => {
-          return <Repo repo={repo} />;
+          return <Repo repo={repo} key={repo.id} />;
         })}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiUser, FiSearch } from "react-icons/fi";
 import { animated, useSpring } from "react-spring";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const RepoForm = () => {
   const [repoName, setRepoName] = useState<string>("");
   const [hovered, setHovered] = useState<boolean>(false);
@@ -43,7 +44,14 @@ const RepoForm = () => {
         type="submit"
         onClick={(e: any) => {
           e.preventDefault();
-          navigate(`/${repoName}`);
+          if (repoName === "" || repoName === " ") {
+            toast.error("ADD A USERNAME!");
+          }
+          if (repoName !== "") {
+            if (repoName !== " ") {
+              navigate(`/${repoName}`);
+            }
+          }
         }}
         style={expandingButton}
         className="form-submit-button"

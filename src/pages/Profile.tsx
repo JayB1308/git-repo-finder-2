@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import RepoBar from "../components/RepoBar";
 import axios from "axios";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useRecoilState } from "recoil";
 import { LoadingState } from "../atoms";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-hot-toast";
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [repos, setRepos] = useState<any>([]);
@@ -19,15 +20,20 @@ const Profile = () => {
   const [userProfile, setUserProfile] = useState<any>({});
 
   const { name } = useParams();
+  const nav = useNavigate();
 
   const getHeader = async () => {
     setLoadHeader(true);
     try {
       const response = await axios.get(`https://api.github.com/users/${name}`, {
         headers: {
-          Authorization: `${process.env.REACT_APP_API_KEY}`,
+          Authorization: `Token ${process.env.REACT_APP_API_KEY}`,
         },
       });
+      if (response.status !== 200) {
+        toast.error("PLEASE ENTER A VALID USERNAME!");
+        nav("/");
+      }
       setLoadHeader(false);
       setUserProfile(response.data);
     } catch (error) {
@@ -42,12 +48,16 @@ const Profile = () => {
         `https://api.github.com/users/${name}/repos?page=${currentPage}&per_page=10`,
         {
           headers: {
-            Authorization: `${process.env.REACT_APP_API_KEY}`,
+            Authorization: `Token ${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
       if (repos.status === 200) {
         setLoading(false);
+      }
+      if (repos.status !== 200) {
+        toast.error("PLEASE ENTER A VALID USERNAME!");
+        nav("/");
       }
       setRepos(repos.data);
     } catch (error) {

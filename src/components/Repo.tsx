@@ -38,7 +38,7 @@ const Repo = ({ repo }: RepoProp) => {
         `https://api.github.com/repos/${name}/${repo.name}/languages`,
         {
           headers: {
-            Authorization: `${process.env.REACT_APP_API_KEY}`,
+            Authorization: `Token ${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
