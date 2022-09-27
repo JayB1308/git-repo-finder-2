@@ -35,18 +35,17 @@ const Profile = () => {
         },
       });
 
-      let data = Math.round(response.data.public_repos / numberOfRepos);
-      console.log(data);
+      let data = Math.ceil(response.data.public_repos / numberOfRepos);
       if (data === 0) {
         data = 1;
       }
+
       const arr = Array.from({ length: data }, (_, index) => index + 1);
 
       setTotalPages(arr);
       setLoadHeader(false);
       setUserProfile(response.data);
     } catch (error) {
-      console.log(error);
       toast.error("PLEASE ENTER A VALID USERNAME!");
       nav("/");
     }
@@ -134,11 +133,13 @@ const Profile = () => {
                   <button
                     disabled={
                       currentPage ===
-                      Math.round(userProfile.public_repos / numberOfRepos)
+                        Math.round(userProfile.public_repos / numberOfRepos) ||
+                      Math.ceil(userProfile.public_repos / numberOfRepos) === 1
                     }
                     className={`page-button ${
                       currentPage ===
-                      Math.round(userProfile.public_repos / numberOfRepos)
+                        Math.ceil(userProfile.public_repos / numberOfRepos) ||
+                      Math.ceil(userProfile.public_repos / numberOfRepos) === 1
                         ? "button-disabled"
                         : ""
                     }`}
