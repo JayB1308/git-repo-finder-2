@@ -1,6 +1,6 @@
 .profile-header-container {
   width: 90%;
-  margin-top: 1%;
+  margin-top: 2%;
   display: flex;
   align-items: center;
   padding: 1rem 0.5rem;
@@ -109,8 +109,6 @@
         }
       }
     }
-  }
-  @media screen and (max-width: $screen-tablet-l) and (min-width: $screen-tablet-s) {
   }
 }
 

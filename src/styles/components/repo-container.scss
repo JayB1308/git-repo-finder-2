@@ -1,16 +1,15 @@
 .repo-container {
   width: 96%;
   display: flex;
-  padding: 0.25rem;
+  padding: 0.5rem;
   align-items: center;
   justify-content: center;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 0.5rem;
   .repos {
     width: 95%;
     margin: 0.5rem auto;
     display: grid;
-    row-gap: 5%;
+    row-gap: 1.5rem;
     column-gap: 2%;
     grid-template-columns: repeat(2, 1fr);
   }

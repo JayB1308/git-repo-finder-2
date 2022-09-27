@@ -1,12 +1,21 @@
 .profile-container {
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-image: linear-gradient(180deg, #5ab2f7, #12cff3);
+  gap: 1%;
   background-color: #fbfbfb;
+  .profile-upper-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .profile-lower-container {
     width: 100%;
+    height: auto;
     padding: 0.5rem 0.25rem;
     display: flex;
     align-items: center;
@@ -17,24 +26,112 @@
     width: 90%;
     align-items: center;
     justify-content: center;
-    gap: 1%;
-    padding: 0.25rem 0.5rem;
+    padding: 0.35rem 0.5rem;
     border-radius: 0.5rem;
-    margin-top: 12%;
-    margin-bottom: 2%;
+    margin-top: 0.5%;
+    margin-bottom: 2rem;
     background-color: $bg-color;
-    .page-button {
+
+    .pagination-options {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0.25rem;
-      font-size: $medium;
-      border-radius: 50%;
-      border: none;
-      font-size: $small;
-      background-color: $bg-accent-color;
-      color: $font-color;
-      cursor: pointer;
+      width: 100%;
+      padding: 0.25rem 1rem;
+      justify-content: space-between;
+
+      .page-changer {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        .page-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $bg-accent-color;
+          background-color: white;
+          width: 1.5rem;
+          height: 1.5rem;
+          padding: 0.5rem;
+          border-radius: 50%;
+          font-weight: 700;
+          font-size: $small;
+          border: 1.5px solid $bg-accent-color;
+          cursor: pointer;
+          transition: background-color 0.2s, color 0.2s, transform 0.4s;
+
+          &:hover {
+            background-color: $bg-accent-color;
+            color: $font-color;
+            transform: translateY(-0.25rem);
+          }
+        }
+
+        .current-page {
+          background-color: $bg-accent-color;
+          color: $font-color;
+        }
+
+        .button-disabled {
+          opacity: 0.75;
+          cursor: not-allowed !important;
+        }
+
+        .page-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.25rem;
+          font-size: $medium;
+          border-radius: 50%;
+          border: none;
+          font-size: $small;
+          background-color: $bg-accent-color;
+          color: $font-color;
+          cursor: pointer;
+        }
+        .pages {
+          display: flex;
+          gap: 0.25rem;
+        }
+      }
+      .repo-changer {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        & select {
+          width: 75%;
+          padding: 0.45rem;
+          font-size: 0.85rem;
+          font-weight: 700;
+          border: 2px solid $bg-accent-color;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+    @media screen and (max-width: $screen-mobile-l) and (min-width: $screen-mobile-s) {
+      .pagination-options {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 0.25rem;
+        .page-changer {
+          width: 100%;
+        }
+
+        .pages {
+          flex-wrap: wrap;
+        }
+
+        .repo-changer {
+          width: 75%;
+          justify-content: flex-start;
+        }
+      }
     }
   }
 }

@@ -54,11 +54,20 @@ const Repo = ({ repo }: RepoProp) => {
 
   return (
     <animated.div
+      key={repo.id}
       style={animateRepo}
       className={loading ? "repo-loading" : "repo"}
     >
       <div className="info-container">
-        <h2>{loading ? <Skeleton baseColor="#caf0f8aa" /> : repo.name}</h2>
+        <h2>
+          {loading ? (
+            <Skeleton baseColor="#caf0f8aa" />
+          ) : (
+            <a className="link" href={repo.html_url}>
+              {repo.name}
+            </a>
+          )}
+        </h2>
         {loading ? (
           <Skeleton baseColor="#caf0f8aa" />
         ) : repo.description ? (
@@ -71,7 +80,11 @@ const Repo = ({ repo }: RepoProp) => {
         ) : (
           <div className="language-container">
             {Object.keys(languages).map((lang) => {
-              return <p className="lang">{lang}</p>;
+              return (
+                <p key={lang} className="lang">
+                  {lang}
+                </p>
+              );
             })}
           </div>
         )}

@@ -13,9 +13,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-hot-toast";
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [numberOfRepos, setNumberOfRepos] = useState<number>(10);
+  const [totalPages, setTotalPages] = useState<Array<number>>([]);
+
   const [repos, setRepos] = useState<any>([]);
 
   const [loading, setLoading] = useRecoilState<boolean>(LoadingState);
+
   const [loadHeader, setLoadHeader] = useState<boolean>(false);
   const [userProfile, setUserProfile] = useState<any>({});
 
@@ -30,14 +34,21 @@ const Profile = () => {
           Authorization: `Token ${process.env.REACT_APP_API_KEY}`,
         },
       });
-      if (response.status !== 200) {
-        toast.error("PLEASE ENTER A VALID USERNAME!");
-        nav("/");
+
+      let data = Math.round(response.data.public_repos / numberOfRepos);
+      console.log(data);
+      if (data === 0) {
+        data = 1;
       }
+      const arr = Array.from({ length: data }, (_, index) => index + 1);
+
+      setTotalPages(arr);
       setLoadHeader(false);
       setUserProfile(response.data);
     } catch (error) {
       console.log(error);
+      toast.error("PLEASE ENTER A VALID USERNAME!");
+      nav("/");
     }
   };
 
@@ -45,19 +56,16 @@ const Profile = () => {
     setLoading(true);
     try {
       const repos = await axios.get(
-        `https://api.github.com/users/${name}/repos?page=${currentPage}&per_page=10`,
+        `https://api.github.com/users/${name}/repos?page=${currentPage}&per_page=${numberOfRepos}`,
         {
           headers: {
             Authorization: `Token ${process.env.REACT_APP_API_KEY}`,
           },
         }
       );
+
       if (repos.status === 200) {
         setLoading(false);
-      }
-      if (repos.status !== 200) {
-        toast.error("PLEASE ENTER A VALID USERNAME!");
-        nav("/");
       }
       setRepos(repos.data);
     } catch (error) {
@@ -67,11 +75,11 @@ const Profile = () => {
 
   useEffect(() => {
     getHeader();
-  }, []);
+  }, [numberOfRepos]);
 
   useEffect(() => {
     getRepos();
-  }, [currentPage]);
+  }, [currentPage, numberOfRepos]);
 
   return (
     <>
@@ -79,11 +87,13 @@ const Profile = () => {
         <Loader />
       ) : (
         <div className="profile-container">
-          <ProfileHeader userInfo={userProfile} />
-          <RepoBar
-            public_gists={userProfile.public_repos}
-            public_repos={userProfile.public_gists}
-          />
+          <div className="profile-upper-container">
+            <ProfileHeader userInfo={userProfile} />
+            <RepoBar
+              public_gists={userProfile.public_repos}
+              public_repos={userProfile.public_gists}
+            />
+          </div>
           <div className="profile-lower-container">
             <RepoContainer repos={repos} />
           </div>
@@ -91,28 +101,72 @@ const Profile = () => {
             {loading ? (
               <Skeleton />
             ) : (
-              <>
-                <button
-                  className="page-button"
-                  disabled={currentPage === 1 ? true : false}
-                  onClick={() => {
-                    setCurrentPage((prev) => prev - 1);
-                  }}
-                >
-                  <FaChevronLeft />
-                </button>
-                <div className="pages">
-                  <h2>{currentPage}</h2>
+              <div className="pagination-options">
+                <div className="page-changer">
+                  <button
+                    className={`page-button ${
+                      currentPage === 1 ? "button-disabled" : ""
+                    }`}
+                    disabled={currentPage === 1 ? true : false}
+                    onClick={() => {
+                      setCurrentPage((prev) => prev - 1);
+                    }}
+                  >
+                    <FaChevronLeft />
+                  </button>
+                  <div className="pages">
+                    {totalPages.map((ele, index) => {
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setCurrentPage(ele);
+                          }}
+                          className={`${
+                            ele === currentPage ? "current-page" : ""
+                          } page-number `}
+                        >
+                          {ele}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    disabled={
+                      currentPage ===
+                      Math.round(userProfile.public_repos / numberOfRepos)
+                    }
+                    className={`page-button ${
+                      currentPage ===
+                      Math.round(userProfile.public_repos / numberOfRepos)
+                        ? "button-disabled"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      setCurrentPage((prev) => prev + 1);
+                    }}
+                  >
+                    <FaChevronRight />
+                  </button>
                 </div>
-                <button
-                  className="page-button"
-                  onClick={() => {
-                    setCurrentPage((prev) => prev + 1);
-                  }}
-                >
-                  <FaChevronRight />
-                </button>
-              </>
+                <div className="repo-changer">
+                  <select
+                    value={numberOfRepos}
+                    onChange={(e: any) => {
+                      setNumberOfRepos(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                    <option value={75}>75</option>
+                    <option value={100}>100</option>
+                  </select>
+                </div>
+              </div>
             )}
           </div>
         </div>
